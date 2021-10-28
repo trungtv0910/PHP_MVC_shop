@@ -1,0 +1,146 @@
+<style>
+    .table td,
+    .table th {
+        white-space: normal
+    }
+
+    .table th:nth-child(1),
+    .table th:nth-child(2) {
+        width: 20px;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+</style>
+
+<?php
+if (isset($_POST['search'])) {
+    $key = $_POST['key_search'];
+    $id_cat = $_POST['id_cat'];
+} else {
+    $key = '';
+    $id_cat = 0;
+}
+?>
+
+
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col ">
+                        <h3 class="mb-0">Tất Cả Sản Phẩm</h3>
+                    </div>
+                    <div class="col">
+                        <a href="index.php?act=product&add"> <button class="btn btn-success float_right">Thêm Sản Phẩm</button></a>
+
+                    </div>
+
+                    <div class=" col-md-6 text-right">
+                        <!-- thực hiện form tìm kiếm sản phẩm theo tên và danh mục -->
+                        <form action="" method="post" style="display:flex;gap:20px">
+                            <input type="text" style='width:250px' name="key_search">
+                            <select style="width:150px" name="id_cat">
+                                <option value="0">Tất Cả </option>
+                                <?php
+                                $row_cat = category_select_all();
+                                foreach ($row_cat as $value) {
+                                ?>
+                                    <option value="<?php echo $value['catId'] ?>"><?php echo $value['catName'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <button name="search" class="btn btn-warning ">Tìm kiếm <i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-responsive">
+                <form action="" method="post">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Số TT</th>
+                                <th>Mã Sản Phẩm</th>
+                                <th>Hình</th>
+                                <th>Tên Sản Phẩm</th>
+                               
+                                <th>Danh Mục</th>
+                              
+                                <th>Mô tả</th>
+                                
+                                <th>Lượt xem</th>
+                                <th>Ngày nhập</th>
+                                <th>Tùy chọn</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $row = product_select_all($key, $id_cat);
+
+                            $i = 0;
+                            foreach ($row as $value) {
+                                extract($value);
+                            ?>
+
+                                <tr>
+                                    <td><?php echo ++$i; ?></td>
+                                    <td><?php echo $prodId; ?></td>
+                                    <td class="sup_parent"><img width="100" src="uploads/<?php echo $image ?>" alt="">
+                                        <!-- sup -->
+                                        <?php
+                                        if ($type == 0) {
+                                            $alert_type = '<span class="sup_nomal sup_title">Thường</span>';
+                                        } else if ($type == 1) {
+                                            $alert_type = '<span class="sup_new sup_title">Mới</span>';
+                                        } else {
+                                            $alert_type = '<span class="sup_bestsale sup_title">Bán Chạy</span>';
+                                        }
+                                        echo $alert_type;
+                                        ?>
+                                        <!-- end sup -->
+                                    </td>
+                                    <td class="text-left"><?php echo $prodName ?>
+                                        <br>
+                                        <b>Số lượng còn lại: <?php echo $quantity ?></b>
+                                        <br>
+                                        <b>Giá Bán: </b> <?php echo number_format($price) ?> <b>VNĐ</b>
+                                    </td>
+                                    <td class="text-left">
+                                        <?php
+                                        $res_cat = category_select_by_id($catId);
+                                        echo $res_cat['catName'];
+                                        ?>
+                                        <br>
+                                        <b>Loại : </b>
+                                        <?php $res_childCat =categoryChild_catChildName($catChildId) ;
+                                        echo $res_childCat['catChildName'];
+                                        ?>
+                                    </td>
+
+                               
+
+                                    <td><?php echo textShorten($prodDesc,100) ?></td>
+                                 
+                                    <td><?php echo  $view ?> </td>
+                                    <td><?php echo  $dayInput ?> </td>
+
+                                    <td><a class="btn btn-primary" href="index.php?act=product&id_edit=<?php echo $prodId ?>">Sửa</a>
+                                        <!-- <button class="btn btn_sua">Sửa</button> -->
+
+
+                                        <a onclick="return confirm('Are you sure?')" class="btn btn-danger" href="index.php?act=product&id_delete=<?php echo $prodId ?>"">Xóa</a>
+                                </td>
+                            </tr>
+<?php } ?>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

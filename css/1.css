@@ -1,0 +1,56 @@
+* {margin:0;padding: 0;}
+/* .ps-masonry {
+  
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.ps-shoes--carousel {
+    width: 25%;
+}
+.ps-owl--colection.owl-slider {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 530px;
+    overflow: hidden;
+}
+.ps-shoe__variant.normal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+} */
+
+/* .ps-shoe__variant.normal img {
+    align-content: space-between;
+    width: 20%;
+    margin: 5px;
+    
+} */
+.color-while{color: white;}
+.ps-header-title{
+    margin-top: 180px;
+}
+.ps-title{
+    font-weight: 600;
+    margin-top: 0px;
+    font-family: "Roboto Condensed", sans-serif !important;
+    color: #424453;
+    text-align: left;
+    text-transform: uppercase;
+    line-height: 1.2;
+    font-size: 32px;
+}
+.ps-review-child>.ps-review__content{
+    background-color: #fff!important;
+}
+.sup-comment{
+    background-color: #295499;
+    color:#fff;
+    border-radius: 50%;
+    padding: 2px;
+}
+.bg-color-grey{
+    background-color: #f5f5fa;
+}
